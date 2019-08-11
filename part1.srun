@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+#SBATCH --account=bgmp          ### SLURM account which will be charged for the job
+#SBATCH --partition=bgmp        ### Partition (like a queue in PBS)
+#SBATCH --job-name=demultiplexing          ### Job Name
+#SBATCH --output=slurm-%j-%x.out          ### File in which to store job output
+#SBATCH --time=0-10:00:00       ### Wall clock time limit in Days-HH:MM:SS
+#SBATCH --nodes=1               ### Node count required for the job
+#SBATCH --ntasks-per-node=1     ### Nuber of tasks to be launched per Node
+#SBATCH --cpus-per-task=1       ### Number of cpus (cores) per task
+#SBATCH --mail-user=nwagner2@uoregon.edu
+#SBATCH --mail-type=all
+
+# /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R1_001.fastq.gz
+# /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz
+# /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz
+# /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R4_001.fastq.gz
+
+conda deactivate
+conda deactivate
+conda activate bgmp_py3
+
+/usr/bin/time -v python demultiplexing_part1.py -f /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R1_001.fastq.gz -l 101 -o R1_fig.png
+
+/usr/bin/time -v python demultiplexing_part1.py -f /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz -l 8 -o R2_fig.png
+
+/usr/bin/time -v python demultiplexing_part1.py -f /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz -l 8 -o R3_fig.png
+
+/usr/bin/time -v python demultiplexing_part1.py -f /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R4_001.fastq.gz -l 101 -o R4_fig.png
