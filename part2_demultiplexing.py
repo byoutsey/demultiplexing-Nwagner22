@@ -10,7 +10,7 @@
 
 import gzip
 
-COVERAGE_CUTOFF = 31
+COVERAGE_CUTOFF = 31 #why?
 ALL_INDEXES = [] # I would read all 24 indexes in from the file
 R1_RECORD = []
 R2_RECORD = []
@@ -53,6 +53,10 @@ def reverse_compliment(index):
 # unit test:
 #   TATG goes in 
 #   CATA gets returned
+
+#Saving a "reverse complement" variable is not necessary
+#This function can just return a boolean comparing two strings: isComplement(forwardString, reverseString) 
+#That might help clean up your if statements
 
 
 # FUNCTION to check if an index is one of the 24 given
@@ -97,6 +101,7 @@ with gzip.open('r1test.fastq.gz','rt') as R1, gzip.open('r2test.fastq.gz','rt') 
         R4_RECORD.append(R4.readline().strip())
         R4_RECORD.append(R4.readline().strip())
         R4_RECORD.append(R4.readline().strip())
+        #why is this so verbose? You could make a for loop. 
 
         # condition to break out of the loop
         if(R1_RECORD[0] == ""):
@@ -109,6 +114,8 @@ with gzip.open('r1test.fastq.gz','rt') as R1, gzip.open('r2test.fastq.gz','rt') 
         # 4. if both are valid indexes, but are not the reverse compliment of eachother, then the whole record is put in the respective index hopped files
         
         # unreversed_uncomplimented = reverse_compliment(R3_RECORD[1])
+        #why is this called "unreversed"? It's the reversed complement right? 
+        #btw a sequence is a "complement" not "compliment". You are not flattering your reads. 
 
         # check 1/3:
         # if(check_index(R2_RECORD[1]) != True or check_index(unreversed_uncomplimented) != True):
@@ -128,6 +135,8 @@ with gzip.open('r1test.fastq.gz','rt') as R1, gzip.open('r2test.fastq.gz','rt') 
         #     if(coverage_check(R3_RECORD[1][i]) != True):
         #         The forward sequence record will be appended to the undetermined_R1.fastq file with the header modified to contain both indices
         #         The reverse sequence record will be appended to the undetermined_R2.fastq file with the header modified to contain both indices
+                #provide an example of what this naming would look like. Preferrably in a test output file. 
+    
         #     else:
         #         The current base in this index passes the coverage check
 
@@ -147,4 +156,4 @@ with gzip.open('r1test.fastq.gz','rt') as R1, gzip.open('r2test.fastq.gz','rt') 
         R1_RECORD = []
         R2_RECORD = []
         R3_RECORD = []
-        R4_RECORD = []
+        R4_RECORD = [] #why are you reseting these variables? 
